@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+<!-- Main contents -->
+{% block main%}
+<!-- Left content -->
+<div id="left-content" class="content">
+    <div id="lesson-wrapper">
+        <div id="lesson" class="uk-container uk-container-xsmall uk-margin-top">
+            
+            {% include  lesson %}
+        </div>
+    </div>
+    <div id="lesson-nav" class="">
+        <a href="{{previous_page}}" uk-slidenav-previous></a>
+        <a href="{{next_page}}" uk-slidenav-next></a>
+    </div>
+
+</div>
+<!-- Right content -->
+<div id="right-content" class="content">
+    <div id="code-area">
+        <div id="code-textarea">
+            <!-- data-gramm="false"はgrammarlyを無効にする -->
+            <textarea id="editor" class="code lined" wrap="off" autocomplete="off" autocorrect="off"
+                autocapitalize="off" spellcheck="false" data-gramm="false">{{ code }}</textarea>
+        </div>
+
+    </div>
+    <div id="code-buttons" class="buttons">
+        <button id="reset" class="button" onfocus="this.blur();">Reset</button>
+        <button id="compile-run" class="button" onfocus="this.blur();">Run</button>
+    </div>
+    <div id="program-output"></div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<!-- Stick screen -->
+<script>
+    $(window).on('load', function () {
+        $('body').css('overflow', 'hidden');
+        $('html').css('overflow', 'hidden');
+    });
+</script>
+
+<!-- CodeMirror JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/python/python.min.js"></script>
+
+<!-- Linedtextarea JS -->
+<!-- <script src="/static/js/jquery-linedtextarea.js"></script> -->
+
+<!-- JS -->
+<script src="/static/js/script.js"></script>
+{% endblock %}

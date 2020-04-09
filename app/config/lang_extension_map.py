@@ -1,0 +1,3 @@
+extensions = {
+    'python': 'py'
+}

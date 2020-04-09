@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.3.7/dist/css/uikit.min.css">
+
+    <!-- CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.css">
+
+    <!-- Linedtextarea CSS
+    <link rel="stylesheet" href="/static/css/jquery-linedtextarea.css"> -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Header -->
+        <nav class="uk-navbar-container" uk-navbar>
+            <!-- Nav left -->
+            <div class="uk-navbar-left">
+                <!-- Logo -->
+                <a class="uk-navbar-item uk-logo" href="/">Logo</a>
+
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a href="#">
+                            <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
+                            Features
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Nav right -->
+            <div class="uk-navbar-right">
+                <div class="uk-navbar-item">
+                    <button id="nav-dropdown" class="uk-button uk-button-default" type="button"><span
+                            uk-icon="menu"></span></button>
+                    <div class="uk-width-large" uk-dropdown="mode: click">
+                        <div class="uk-dropdown-grid uk-child-width-1-2@m" uk-grid>
+                            <div>
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li class="uk-active"><a href="#">Active</a></li>
+                                    <li><a href="#">Item</a></li>
+                                    <li class="uk-nav-header">Header</li>
+                                    <li><a href="#">Item</a></li>
+                                    <li><a href="#">Item</a></li>
+                                    <li class="uk-nav-divider"></li>
+                                    <li><a href="#">Item</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li class="uk-active"><a href="#">Active</a></li>
+                                    <li><a href="#">Item</a></li>
+                                    <li class="uk-nav-header">Header</li>
+                                    <li><a href="#">Item</a></li>
+                                    <li><a href="#">Item</a></li>
+                                    <li class="uk-nav-divider"></li>
+                                    <li><a href="#">Item</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+
+        <!-- Main contents -->
+        <div class="contents">
+            {% block main %}
+            {% endblock %}
+        </div>
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.7/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.7/dist/js/uikit-icons.min.js"></script>
+        {% block script %}
+        {% endblock %}
+    </div>
+</body>
+
+</html>
