@@ -25,8 +25,12 @@ def compile(code, stdinput=''):
         'Content-type': 'application/json'
     }
 
-    r = requests.post(url, data=json.dumps(data), timeout=3.5, headers=headers)
-    print(r.text)
+    try:
+        r = requests.post(url, data=json.dumps(data), timeout=1.0, headers=headers)
+    except requests.ReadTimeout as e:
+        return json.dumps({
+            'status_code': 500
+        })
     if r.status_code != 200:
         return json.dumps({
             'status_code': r.status_code
