@@ -4,20 +4,45 @@
 {% block main%}
 <!-- Left content -->
 <div id="left-content" class="content">
-    <div id="lesson-wrapper">
+    <div id="lesson-nav" class="uk-position-relative">
+        <a href="{{ previous_page }}" class="uk-position-medium uk-position-center-left"><span
+                uk-icon="icon: chevron-left"></span>Previous</a>
+        <div class="uk-position-medium uk-position-center">
+            <span>{{ page_index }} / {{ page_count }}<span uk-icon="icon: chevron-down"></span></span>
+            <div uk-dropdown="mode: click; pos: bottom-justify; boundary: .boundary-align; boundary-align: true"">
+                <ul class="uk-nav uk-dropdown-nav">
+                    {% for link in links %}
+                    <li><a href="{{ link }}">{{ link }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- <ul class="uk-nav-default uk-nav-parent-icon" uk-nav="multiple: true">
+                <li class="uk-parent" id="page-index">
+                    <a href="#">{{ page_index }} / {{ page_count }}</span></a>
+                    <ul class="uk-nav-sub">
+                        {% for link in links %}
+                        <li><a href="{{ link }}">a</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul> -->
+        </div>
+        <a href="{{ next_page }}" class="uk-position-medium uk-position-center-right">Next<span
+                uk-icon="icon: chevron-right"></span></a>
+    </div>
+    <div id="lesson-wrapper" class="uk-position-relative">
         <div id="lesson" class="uk-container uk-container-xsmall uk-margin-top">
-            
-            {% include  lesson %}
+            {% block lesson %}
+            {% endblock %}
         </div>
     </div>
-    <div id="lesson-nav" class="">
-        <a href="{{previous_page}}" uk-slidenav-previous></a>
-        <a href="{{next_page}}" uk-slidenav-next></a>
-    </div>
+
+
 
 </div>
 <!-- Right content -->
 <div id="right-content" class="content">
+
     <div id="code-area">
         <div id="code-textarea">
             <!-- data-gramm="false"はgrammarlyを無効にする -->
