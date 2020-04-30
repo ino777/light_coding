@@ -1,8 +1,10 @@
 import os
 import sys
+import glob
 import logging
-from flask import Flask, request, jsonify, render_template, url_for
+from flask import Flask, request, jsonify, render_template, url_for, redirect
 from jinja2 import FileSystemLoader
+from jinja2.exceptions import TemplateNotFound
 
 
 logger = logging.getLogger(__name__)
@@ -34,28 +36,36 @@ def index():
     return render_template('index.html', title=title)
 
 
-@app.route('/<lang>/list', methods=['GET'])
+@app.route('/lesson/<lang>/list', methods=['GET'])
 def lesson_list(lang):
     title = lang + ' List'
-    lessons = router.get_path(lang, 'list')
-    return render_template('list.html', title=title)
+    template_filepath = '/{}/list.html'.format(lang)
+    return render_template('list.html', title=title, list_template=template_filepath)
 
 
-@app.route('/<lang>/<section>/<int:page>', methods=['GET'])
+# レッスン
+@app.route('/lesson/<lang>/<section>/<page>', methods=['GET'])
 def lesson(lang, section, page):
     # Title
-    title = lang + ' Lesson'
+    title = lang.capitalize() + ' Lesson'
 
-    # Pagination
-    current_path = router.get_path(lang, section, str(page))
-    previous_page = router.previous_path(current_path)
-    next_page = router.next_path(current_path)
+    # 同一セクション内で登録されたURLの数
+    section_children = router.children(router.get_path('lesson', lang, section))
+    page_count = len(section_children)
+    page_index = section_children.index(router.get_tail(router.get_path('lesson', lang, section, page))) + 1
+
+    # Link
+    current_path = url_for('lesson', lang=lang, section=section, page=page)
+    previous_page = router.previous_path(current_path, depth=2)
+    next_page = router.next_path(current_path, depth=2)
+
+    links = router.brothers(current_path)
 
     # Code
     ext = extensions.get(lang)
-    if not ext:
+    if ext is None:
         raise KeyError('No such language in extensions map: ' + lang)
-    filename = '{}_{}.{}'.format(section, page, ext)
+    filename = '{}.{}'.format(page, ext)
     filepath = os.path.join(contents_dir, lang, section, filename)
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
@@ -65,20 +75,21 @@ def lesson(lang, section, page):
         code = ''
 
     # Template
-    template_filename = '{}_{}.html'.format(section, page)
-    template_filepath = '/' + \
-        os.path.join(lang, section, template_filename).replace(
-            os.path.sep, '/')
+    template_filename = '{}.html'.format(page)
+    template_filepath = '/{}/{}/{}'.format(lang, section, template_filename)
 
     context = {
         'title': title,
-        'language': lang,
+        'lang': lang,
         'section': section,
         'page': page,
         'previous_page': previous_page,
         'next_page': next_page,
+        'links': links,
+        'page_index': page_index,
+        'page_count': page_count,
         'code': code,
-        'lesson': template_filepath,
+        'lesson_template': template_filepath,
     }
 
     return render_template('lesson.html', **context)
