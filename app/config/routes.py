@@ -81,9 +81,9 @@ class Node(object):
 class Router(Singleton):
     def __init__(self, root=''):
         self.root = Node(root)
-        self.routes = []
+        self.names = {}
     
-    def register(self, path):
+    def register(self, path, name=''):
         values = re.split(r'[/\\]', path)
         tail = self.root
         for value in values:
@@ -93,8 +93,8 @@ class Router(Singleton):
             if not child:
                 child = Node(value)
                 tail.add_child(child)
-                self.routes.append(child)
             tail = child
+        self.names[self.get_path_from_leaf(tail)] = name
     
     def valid_path(self, path):
         values = re.split(r'[/\\]', path)
@@ -144,14 +144,16 @@ class Router(Singleton):
             raise ValueError('invalid path:', path)
         tail = self.get_tail(path)
         previous_leaf = tail.previous(depth)
-        return self.get_path_from_leaf(previous_leaf)
+        p_path = self.get_path_from_leaf(previous_leaf)
+        return p_path, self.names[p_path]
 
     def next_path(self, path, depth=1):
         if not self.valid_path(path):
             raise ValueError('invalid path:', path)
         tail = self.get_tail(path)
         next_leaf = tail.next(depth)
-        return self.get_path_from_leaf(next_leaf)
+        n_path = self.get_path_from_leaf(next_leaf)
+        return n_path, self.names[n_path]
     
     def parent(self, path):
         if not self.valid_path(path):
@@ -165,46 +167,46 @@ class Router(Singleton):
         tail = self.get_tail(path)
         return tail.children
     
-    def brothers(self, path):
+    def brother_paths(self, path):
         if not self.valid_path(path):
             raise ValueError('invalid path:', path)
         tail = self.get_tail(path)
-        return [self.get_path_from_leaf(child) for child in tail.parent.children]
+        return [(self.get_path_from_leaf(child), self.names[self.get_path_from_leaf(child)]) for child in tail.parent.children]
 
 
 router = Router.get_instance()
-router.register('/lesson/python/list')
-router.register('/lesson/python/introduction/whypython')
-router.register('/lesson/python/introduction/pysonic')
-router.register('/lesson/python/introduction/helloworld')
+router.register('/lesson/python/list', 'Contents List')
+router.register('/lesson/python/introduction/whypython', 'Why Python?')
+router.register('/lesson/python/introduction/pysonic', 'Pysonic なコード')
+router.register('/lesson/python/introduction/helloworld', 'Hello World!')
 
-router.register('/lesson/python/basics/variable')
-router.register('/lesson/python/basics/boolean')
-router.register('/lesson/python/basics/none')
-router.register('/lesson/python/basics/string')
-router.register('/lesson/python/basics/datatype1')
-router.register('/lesson/python/basics/datatype2')
-router.register('/lesson/python/basics/datatype3')
-router.register('/lesson/python/basics/datatype4')
-router.register('/lesson/python/basics/flowcontrol1')
-router.register('/lesson/python/basics/flowcontrol2')
-router.register('/lesson/python/basics/flowcontrol3')
-router.register('/lesson/python/basics/comprehension')
-router.register('/lesson/python/basics/function')
-router.register('/lesson/python/basics/argument')
-router.register('/lesson/python/basics/lambda')
-router.register('/lesson/python/basics/closure')
-router.register('/lesson/python/basics/decorator')
-router.register('/lesson/python/basics/exception')
+router.register('/lesson/python/basics/variable', '変数')
+router.register('/lesson/python/basics/boolean', '真偽値')
+router.register('/lesson/python/basics/none', 'None')
+router.register('/lesson/python/basics/string', '文字列')
+router.register('/lesson/python/basics/datastructure1', 'データ構造１（リスト型）')
+router.register('/lesson/python/basics/datastructure2', 'データ構造２（タプル型）')
+router.register('/lesson/python/basics/datastructure3', 'データ構造３（辞書型）')
+router.register('/lesson/python/basics/datastructure4', 'データ構造４（集合型）')
+router.register('/lesson/python/basics/flowcontrol1', 'if 文')
+router.register('/lesson/python/basics/flowcontrol2', 'while 文')
+router.register('/lesson/python/basics/flowcontrol3', 'for 文')
+router.register('/lesson/python/basics/comprehension', '内包表記')
+router.register('/lesson/python/basics/function', '関数')
+router.register('/lesson/python/basics/argument', '引数')
+router.register('/lesson/python/basics/lambda', 'ラムダ式')
+router.register('/lesson/python/basics/closure', 'クロージャ')
+router.register('/lesson/python/basics/decorator', 'デコレータ')
+router.register('/lesson/python/basics/exception', '例外処理')
 
-router.register('/lesson/python/methods/class')
-router.register('/lesson/python/methods/instance')
-router.register('/lesson/python/methods/inheritance')
-router.register('/lesson/python/methods/property')
-router.register('/lesson/python/methods/abstract')
-router.register('/lesson/python/methods/classmethod')
+router.register('/lesson/python/methods/class', 'クラス')
+router.register('/lesson/python/methods/instance', 'インスタンス')
+router.register('/lesson/python/methods/inheritance', '継承')
+router.register('/lesson/python/methods/property', 'プロパティ')
+router.register('/lesson/python/methods/abstract', '抽象クラス')
+router.register('/lesson/python/methods/classmethod', 'クラスメソッド')
 
-router.register('/lesson/python/library/os')
+router.register('/lesson/python/library/os', 'os')
 
 
 router.register('/lesson/ruby/methods/1')

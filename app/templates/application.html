@@ -12,7 +12,7 @@
             <div uk-dropdown="mode: click; pos: bottom-justify; boundary: .boundary-align; boundary-align: true"">
                 <ul class="uk-nav uk-dropdown-nav">
                     {% for link in links %}
-                    <li><a href="{{ link }}">{{ link }}</a></li>
+                    <li><a href="{{ link[0] }}">{{ link[1] }}</a></li>
                     {% endfor %}
                 </ul>
             </div>

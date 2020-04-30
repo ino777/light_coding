@@ -56,10 +56,10 @@ def lesson(lang, section, page):
 
     # Link
     current_path = url_for('lesson', lang=lang, section=section, page=page)
-    previous_page = router.previous_path(current_path, depth=2)
-    next_page = router.next_path(current_path, depth=2)
+    previous_page, _ = router.previous_path(current_path, depth=2)
+    next_page, _ = router.next_path(current_path, depth=2)
 
-    links = router.brothers(current_path)
+    links = router.brother_paths(current_path)
 
     # Code
     ext = extensions.get(lang)
