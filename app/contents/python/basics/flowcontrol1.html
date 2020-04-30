@@ -1,0 +1,12 @@
+<h1>if 文</h1>
+<div class="uk-container uk-margin-top">
+    <p>if...elif...elseのように記述します。elif は else if を短くしたものです。</p>
+    <p>条件式を括弧で囲う必要はありません。括弧を書かない方が Python らしいコードです。</p>
+    <br>
+    <p><a href="{{ url_for('lesson', lang=lang, section=section, page='boolean') }}" target="_blank">前述の通り</a>、Python
+        ではオブジェクトに対して真偽を判定できます。したがって、<code>
+        if x == True:</code>などではなく<code>if x:</code>と書くことができます。同様に<code>if x == False:</code>ではなく<code>if not x:</code>と書けます。</p>
+    <p>ただし、オブジェクトが<code>None</code>かどうかの判定に対しては、<code>is</code>,
+        <code>is not</code>を使います。なぜなら<code>None</code>はシングルトンなオブジェクトだからです。</p>
+    <br>
+</div>

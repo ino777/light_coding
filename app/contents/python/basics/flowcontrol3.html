@@ -1,0 +1,37 @@
+<h1>for 文</h1>
+<div class="uk-container uk-margin-top">
+    <p>C 言語などの<code>for</code>文とは少し異なり、<code>for A in B</code>のように記述します。</p>
+    <p>B には反復可能オブジェクト（<a href="https://docs.python.org/ja/3/glossary.html#term-iterable" target="_blank">iterable
+            object</a>）を渡し、A は要素を表します。
+    </p>
+    <p>「イテラブルなオブジェクト」とは要素を一度に 1 つずつ返せるオブジェクトです。例として、文字列やリストなどの<a href="https://docs.python.org/ja/3/glossary.html#term-sequence" target="_blank">シーケンス型</a>や<a href="https://docs.python.org/ja/3/glossary.html#term-iterator" target="_blank">イテレータ</a>などがあります。</p>
+    <br>
+
+    <h4>break と continue</h4>
+    <p>while 文同様、<code>break</code>, <code>continue</code>を使用できます。</p>
+    <br>
+
+    <h3>for ループのテクニック</h3>
+    <h4>range 関数</h4>
+    <p>算術的な数列である<code>range</code>オブジェクトを返します。</p>
+    <p><code>range(stop)</code>あるいは<code>range(start, stop, [step])</code></p>
+    <p>start, stop, step の値のみを保存するため、リストやタプルを新しく作るよりメモリ効率が良いです。</p>
+    <p>例えば、<code>for i in range(1, 10):</code>とした場合、ループごとに i が 1 から 9 まで変化します。stop の値は含まれないことに注意しましょう。</p>
+    <p>start を省略した場合は、0 から始まります。</p>
+    <br>
+
+    <h4>enumerate 関数</h4>
+    <p>渡されたイテラブルなオブジェクトに対し、要素とそのインデックスのタプルを返します。</p>
+    <p><code>enumerate(iterable, start=0)</code></p>
+    <p>インデックスと要素を両方用いたい場合などに便利です。</p>
+    <p><code>for i, value in enumerate(['a', 'b', 'c']):</code>のようにすれば、i がインデックス、value が要素（この場合'a', 'b', 'c'）となります。</p>
+    <br>
+    
+    <h4>zip 関数</h4>
+    <p>二つ以上のシーケンスに対し同時にループを回したい場合に使います。</p>
+    <br>
+    <h4>辞書型のループ</h4>
+    <p>辞書型のキー、値のペアをfor ループで回したい場合は、辞書型のメソッド<code>items()</code>を用います。</p>
+    <p><code>for key, value in d.items():</code>のようにすれば、key がキー、value が値となります。</p>
+    <br>
+</div>
