@@ -1,3 +1,4 @@
 extensions = {
-    'python': 'py'
+    'python': 'py',
+    'ruby': 'rb'
 }

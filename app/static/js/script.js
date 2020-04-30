@@ -27,8 +27,11 @@ function compileCode(code, target) {
         .done((result) => {
             console.log(result);
             message = result.program_message.replace(/</gm, '&lt').replace(/>/gm, '&gt').replace(/\r\n|\r|\n/gm, '<br>');
-            message += '<br>'.repeat(3) + '<span style="color:gray">Program exited.</span>'
+            message += '<br>'.repeat(3)
             $(target).html(message);
+        })
+        .fail((result) => {
+            console.log('Not response');
         })
 }
 
@@ -50,7 +53,8 @@ function RenderCodeMirror(l, id) {
                 mode: 'python',
                 lineNumbers: true,
                 smartIndent: true,
-                indentUnit: 4
+                indentUnit: 4,
+                Theme: 'abcdef',
             });
             cm.save();
             break;

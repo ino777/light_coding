@@ -3,11 +3,11 @@ CSS framework ... UIkit(See here. https://getuikit.com/docs/introduction)
 
 コンテンツの追加方法
 
-1.app/config/routes.py にルートを登録
 
+1. app/config/routes.py に URL（相対パス）とテンプレートのファイル名（tmp_name）を登録
 
 2.app/contents/ 内に /<language>/<section>/ のディレクトリを作成し、
-  テンプレート部分（<section>_<page>.html） と コード部分（<section>_<page>.<ext>） を追加。
+  テンプレート部分（tmp_name.html） と コード部分（tmp_name.<ext>） を追加。
 
     例）
     .
@@ -15,8 +15,8 @@ CSS framework ... UIkit(See here. https://getuikit.com/docs/introduction)
        ├─ contents
             ├─ python
                 ├─ basics
-                    ├─ basics_1.html
-                    ├─ basics_1.py
+                    ├─ variable.html
+                    ├─ variable.py
                   
 
 
@@ -35,6 +35,7 @@ welcome
 basics
    |_
     変数（int float string）
+        真偽値とNone
         文字列のformat, strのメソッド
     データ（list, tuple, dict set）
     制御（if for range pass）
