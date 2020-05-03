@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block css %}
+<link rel="stylesheet" href="/static/css/application.css">
+{% endblock %}
+
 <!-- Main contents -->
 {% block main%}
 <!-- Left content -->
@@ -8,24 +12,19 @@
         <a href="{{ previous_page }}" class="uk-position-medium uk-position-center-left"><span
                 uk-icon="icon: chevron-left"></span>Previous</a>
         <div class="uk-position-medium uk-position-center">
-            <span>{{ page_index }} / {{ page_count }}<span uk-icon="icon: chevron-down"></span></span>
-            <div uk-dropdown="mode: click; pos: bottom-justify; boundary: .boundary-align; boundary-align: true"">
-                <ul class="uk-nav uk-dropdown-nav">
-                    {% for link in links %}
-                    <li><a href="{{ link[0] }}">{{ link[1] }}</a></li>
+            <div>{{ page_index }} / {{ page_count }}<span uk-icon="icon: chevron-down"></span></div>
+            <div id="lesson-nav-dropdown"
+                uk-dropdown="mode: click; pos: bottom-justify; boundary: #lesson-nav; boundary-align: true; animation: uk-animation-slide-top-small">
+                <ul class="uk-nav uk-dropdown-nav uk-list-striped">
+                    {% for url, name in links %}
+                    {% if url == url_for('lesson', lang=lang, section=section, page=page) %}
+                    <li class="uk-active">{{ loop.index0 + 1 }}. {{ name }}</li>
+                    {% else %}
+                    <li class=""><a href="{{ url }}">{{ loop.index0 + 1 }}. {{ name }}</a></li>
+                    {% endif %}
                     {% endfor %}
                 </ul>
             </div>
-            <!-- <ul class="uk-nav-default uk-nav-parent-icon" uk-nav="multiple: true">
-                <li class="uk-parent" id="page-index">
-                    <a href="#">{{ page_index }} / {{ page_count }}</span></a>
-                    <ul class="uk-nav-sub">
-                        {% for link in links %}
-                        <li><a href="{{ link }}">a</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-            </ul> -->
         </div>
         <a href="{{ next_page }}" class="uk-position-medium uk-position-center-right">Next<span
                 uk-icon="icon: chevron-right"></span></a>
@@ -42,7 +41,7 @@
 </div>
 <!-- Right content -->
 <div id="right-content" class="content">
-
+    <div id="code-header"><div id="code-filename">{{ page }}.{{ ext }}</div></div>
     <div id="code-area">
         <div id="code-textarea">
             <!-- data-gramm="false"はgrammarlyを無効にする -->
@@ -52,10 +51,13 @@
 
     </div>
     <div id="code-buttons" class="buttons">
+        <button id="compile-run" class="button" onfocus="this.blur();">Run (Ctrl-Enter)</button>
         <button id="reset" class="button" onfocus="this.blur();">Reset</button>
-        <button id="compile-run" class="button" onfocus="this.blur();">Run</button>
     </div>
-    <div id="program-output"></div>
+    <div id="program-output">
+        <div id="program-output-header">Output</div>
+        <div id="program-output-text"></div>
+    </div>
 </div>
 
 
@@ -69,6 +71,7 @@
         $('html').css('overflow', 'hidden');
     });
 </script>
+
 
 <!-- CodeMirror JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
