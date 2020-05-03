@@ -83,6 +83,7 @@ def lesson(lang, section, page):
         'lang': lang,
         'section': section,
         'page': page,
+        'ext': ext,
         'previous_page': previous_page,
         'next_page': next_page,
         'links': links,
