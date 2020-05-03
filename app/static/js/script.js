@@ -17,6 +17,8 @@ function initOpts() {
 /* ----------------------------------- API　----------------------------------*/
 // コードをapiに送信
 function compileCode(code, target) {
+    $(target).html('Now connecting...');
+
     $.ajax({
         url: '/api/compile',
         method: 'GET',
@@ -31,7 +33,7 @@ function compileCode(code, target) {
             $(target).html(message);
         })
         .fail((result) => {
-            console.log('Not response');
+            $(target).html('Not response');
         })
 }
 
@@ -39,7 +41,7 @@ function compileCode(code, target) {
 // ボトムを画面下部に固定
 function stickBottom(target) {
     var offsetTop = window.innerHeight - target.height();
-    target.offset({top:offsetTop});
+    target.offset({ top: offsetTop });
 }
 
 
@@ -49,7 +51,7 @@ function RenderCodeMirror(l, id) {
     var target = document.getElementById(id)
     switch (l) {
         case 'python':
-                cm = CodeMirror.fromTextArea(target, {
+            cm = CodeMirror.fromTextArea(target, {
                 mode: 'python',
                 lineNumbers: true,
                 smartIndent: true,
@@ -73,20 +75,27 @@ $(function () {
     // divの最下部を画面最下部に固定させる
     var lsnNavDiv = $('#lesson-nav');
     var outputDiv = $('#program-output');
-    $(window).on("load scroll resize", function () {
-        // stickBottom(lsnNavDiv);
-        stickBottom(outputDiv);
-    });
-    outputDiv.on('scroll', function () {
-        stickBottom(outputDiv);
-    });
-    
+    // $(window).on("load scroll resize", function () {
+    //     // stickBottom(lsnNavDiv);
+    //     stickBottom(outputDiv);
+    // });
+    // outputDiv.on('scroll', function () {
+    //     stickBottom(outputDiv);
+    // });
+
 
     // CodeMirror
     // See here. https://codemirror.net/index.html
     var cm = RenderCodeMirror(options['code']['language'], 'editor');
     cm.on('change', function () {
         cm.save();
+    });
+
+    cm.setOption("extraKeys", {
+        'Ctrl-Enter': function () {
+            var code = $('#editor').val();
+            compileCode(code, '#program-output-text');
+        }
     });
 
     // Reset処理
@@ -98,6 +107,8 @@ $(function () {
     // Compile処理
     $('#compile-run').on('click', function () {
         var code = $('#editor').val();
-        compileCode(code, '#program-output');
+        compileCode(code, '#program-output-text');
     });
+
+    $
 });
