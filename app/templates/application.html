@@ -8,40 +8,15 @@
 {% block main%}
 <!-- Left content -->
 <div id="left-content" class="content">
-    <div id="lesson-nav" class="uk-position-relative">
-        <a href="{{ previous_page }}" class="uk-position-medium uk-position-center-left"><span
-                uk-icon="icon: chevron-left"></span>Previous</a>
-        <div class="uk-position-medium uk-position-center">
-            <div>{{ page_index }} / {{ page_count }}<span uk-icon="icon: chevron-down"></span></div>
-            <div id="lesson-nav-dropdown"
-                uk-dropdown="mode: click; pos: bottom-justify; boundary: #lesson-nav; boundary-align: true; animation: uk-animation-slide-top-small">
-                <ul class="uk-nav uk-dropdown-nav uk-list-striped">
-                    {% for url, name in links %}
-                    {% if url == url_for('lesson', lang=lang, section=section, page=page) %}
-                    <li class="uk-active">{{ loop.index0 + 1 }}. {{ name }}</li>
-                    {% else %}
-                    <li class=""><a href="{{ url }}">{{ loop.index0 + 1 }}. {{ name }}</a></li>
-                    {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <a href="{{ next_page }}" class="uk-position-medium uk-position-center-right">Next<span
-                uk-icon="icon: chevron-right"></span></a>
-    </div>
-    <div id="lesson-wrapper" class="uk-position-relative">
-        <div id="lesson" class="uk-container uk-container-xsmall uk-margin-top">
-            {% block lesson %}
-            {% endblock %}
-        </div>
-    </div>
-
-
-
+    {% block left %}
+    {% endblock %}
 </div>
+
 <!-- Right content -->
 <div id="right-content" class="content">
-    <div id="code-header"><div id="code-filename">{{ page }}.{{ ext }}</div></div>
+    <div id="code-header">
+        <div id="code-filename">{{ page }}.{{ ext }}</div>
+    </div>
     <div id="code-area">
         <div id="code-textarea">
             <!-- data-gramm="false"はgrammarlyを無効にする -->

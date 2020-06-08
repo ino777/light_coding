@@ -1,6 +1,7 @@
 :root{
     --top-navbar-height: 50px;
     --lesson-navbar-height: 50px;
+    --lesson-wrapper-height: calc(100vh - var(--top-navbar-height) - var(--lesson-navbar-height) - 8px);    /* 最後の項は調整分*/
     --code-header-height: 25px;
     --code-button-height: 50px;
     --code-mirror-height: 55vh;
@@ -83,14 +84,14 @@ button#nav-dropdown{
 #lesson-nav-dropdown {
     margin: 0;
     padding: 0;
-    max-height: calc(70vh - var(--top-navbar-height) - var(--lesson-navbar-height));
+    max-height: var(--lesson-wrapper-height);
     overflow: auto;
 }
 
 #lesson-wrapper {
     direction: rtl;
     overflow-y: auto;
-    height: calc(100vh - var(--top-navbar-height) - var(--lesson-navbar-height) - 8px);   /* 最後の項は調整分*/
+    height: var(--lesson-wrapper-height);
 }
 
 #lesson{

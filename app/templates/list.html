@@ -1,5 +1,9 @@
 {% extends "plain.html" %}
 
 {% block plain %}
-{% include list_template %}
+<ul>
+    {% for section_, pages in links %}
+    <li>{{ section_[1] }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}
