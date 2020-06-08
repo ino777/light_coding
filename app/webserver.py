@@ -39,8 +39,8 @@ def index():
 @app.route('/lesson/<lang>/list', methods=['GET'])
 def lesson_list(lang):
     title = lang + ' List'
-    template_filepath = '/{}/list.html'.format(lang)
-    return render_template('list.html', title=title, list_template=template_filepath)
+    links = router.children_recursive(url_for('lesson', lang=lang, section='', page=''))
+    return render_template('list.html', title=title, links=links)
 
 
 # レッスン
@@ -56,10 +56,11 @@ def lesson(lang, section, page):
 
     # Link
     current_path = url_for('lesson', lang=lang, section=section, page=page)
-    previous_page, _ = router.previous_path(current_path, depth=2)
-    next_page, _ = router.next_path(current_path, depth=2)
+    previous_page, _ = router.previous_path(current_path, depth=1)
+    next_page, _ = router.next_path(current_path, depth=1)
 
-    links = router.brother_paths(current_path)
+    links = router.children_recursive(url_for('lesson', lang=lang, section='', page=''))
+    chain = router.get_chain(current_path, 2)
 
     # Code
     ext = extensions.get(lang)
@@ -87,6 +88,7 @@ def lesson(lang, section, page):
         'previous_page': previous_page,
         'next_page': next_page,
         'links': links,
+        'chain': chain,
         'page_index': page_index,
         'page_count': page_count,
         'code': code,

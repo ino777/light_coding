@@ -32,8 +32,13 @@ class Node(object):
     def is_leaf(self):
         return self.children == []
     
+    def get_brothers(self):
+        if self.parent is None:
+            return []
+        return self.parent.children
+    
     def previous(self, depth):
-        if depth <= 0:
+        if depth < 0:
             return None
         parent = self.parent
         if parent is None:
@@ -51,7 +56,7 @@ class Node(object):
         return previous_parent.children[-1]
     
     def next(self, depth):
-        if depth <= 0:
+        if depth < 0:
             return None
         parent = self.parent
         if parent is None:
@@ -139,20 +144,24 @@ class Router(Singleton):
             path = leaf.value + '/' + path
         return path
 
-    def previous_path(self, path, depth=1):
+    def previous_path(self, path, depth=0):
         if not self.valid_path(path):
             raise ValueError('invalid path:', path)
         tail = self.get_tail(path)
         previous_leaf = tail.previous(depth)
         p_path = self.get_path_from_leaf(previous_leaf)
+        if not p_path:
+            return (None,)*2
         return p_path, self.names[p_path]
 
-    def next_path(self, path, depth=1):
+    def next_path(self, path, depth=0):
         if not self.valid_path(path):
             raise ValueError('invalid path:', path)
         tail = self.get_tail(path)
         next_leaf = tail.next(depth)
         n_path = self.get_path_from_leaf(next_leaf)
+        if not n_path:
+            return (None,)*2
         return n_path, self.names[n_path]
     
     def parent(self, path):
@@ -171,15 +180,58 @@ class Router(Singleton):
         if not self.valid_path(path):
             raise ValueError('invalid path:', path)
         tail = self.get_tail(path)
-        return [(self.get_path_from_leaf(child), self.names[self.get_path_from_leaf(child)]) for child in tail.parent.children]
+        return [(self.get_path_from_leaf(brother), self.names[self.get_path_from_leaf(brother)]) for brother in tail.get_brothers()]
+    
+    def _children_recursive(self, tail, paths):
+        if tail.is_leaf():
+            return (self.get_path_from_leaf(tail), self.names[self.get_path_from_leaf(tail)])
+
+        children_paths = []
+        for child in tail.children:
+            children_paths.append(self._children_recursive(child, paths))
+
+        if not None in children_paths:
+            paths.append([
+                (self.get_path_from_leaf(tail), self.names[self.get_path_from_leaf(tail)]),
+                children_paths
+            ])
+
+    def children_recursive(self, path):
+        if not self.valid_path(path):
+            raise ValueError('invalid path:', path)
+        tail = self.get_tail(path)
+
+        paths = []
+        self._children_recursive(tail, paths)
+        return paths
+
+    def get_chain(self, path, depth):
+        if not self.valid_path(path):
+            raise ValueError('invalid path:', path)
+        tail = self.get_tail(path)
+        chain = [(self.get_path_from_leaf(tail), self.names[self.get_path_from_leaf(tail)])]
+        for _ in range(depth):
+            tail = tail.parent
+            if tail is None:
+                raise ValueError('invalid depth:', depth)
+            chain.append((self.get_path_from_leaf(tail), self.names[self.get_path_from_leaf(tail)]))
+        chain.reverse()
+        return chain
 
 
 router = Router.get_instance()
+router.register('/lesson', 'レッスン')
+
+router.register('/lesson/python', 'Python Lesson')
+
 router.register('/lesson/python/list', 'Contents List')
+
+router.register('/lesson/python/introduction', 'イントロ')
 router.register('/lesson/python/introduction/whypython', 'Why Python?')
 router.register('/lesson/python/introduction/pysonic', 'Pysonic なコード')
 router.register('/lesson/python/introduction/helloworld', 'Hello World!')
 
+router.register('/lesson/python/basics', '基礎編')
 router.register('/lesson/python/basics/variable', '変数')
 router.register('/lesson/python/basics/boolean', '真偽値')
 router.register('/lesson/python/basics/none', 'None')
@@ -199,6 +251,7 @@ router.register('/lesson/python/basics/closure', 'クロージャ')
 router.register('/lesson/python/basics/decorator', 'デコレータ')
 router.register('/lesson/python/basics/exception', '例外処理')
 
+router.register('/lesson/python/methods', 'クラスとメソッド')
 router.register('/lesson/python/methods/class', 'クラス')
 router.register('/lesson/python/methods/instance', 'インスタンス')
 router.register('/lesson/python/methods/inheritance', '継承')
@@ -206,7 +259,5 @@ router.register('/lesson/python/methods/property', 'プロパティ')
 router.register('/lesson/python/methods/abstract', '抽象クラス')
 router.register('/lesson/python/methods/classmethod', 'クラスメソッド')
 
+router.register('/lesson/python/library', 'ライブラリ')
 router.register('/lesson/python/library/os', 'os')
-
-
-router.register('/lesson/ruby/methods/1')
