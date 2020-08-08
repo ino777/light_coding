@@ -1,9 +1,19 @@
 {% extends "plain.html" %}
 
 {% block plain %}
-<ul>
-    {% for section_, pages in links %}
-    <li>{{ section_[1] }}</li>
+<h1>{{ title }}</h1>
+<ul class="section">
+    {% for section, pages in links %}
+    <li>
+        {{ section[1] }}
+        <ul class="sub-categories">
+            {% for page in pages %}
+            <li>
+                <a href="{{ page[0] }}">{{ page[1] }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
     {% endfor %}
 </ul>
 {% endblock %}

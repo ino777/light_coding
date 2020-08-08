@@ -38,7 +38,7 @@ def index():
 
 @app.route('/lesson/<lang>/list', methods=['GET'])
 def lesson_list(lang):
-    title = lang + ' List'
+    title = str(lang).capitalize() + ' Lesson'
     links = router.children_recursive(url_for('lesson', lang=lang, section='', page=''))
     return render_template('list.html', title=title, links=links)
 
@@ -85,8 +85,8 @@ def lesson(lang, section, page):
         'section': section,
         'page': page,
         'ext': ext,
-        'previous_page': previous_page,
-        'next_page': next_page,
+        'previous_page': previous_page or '',
+        'next_page': next_page or '',
         'links': links,
         'chain': chain,
         'page_index': page_index,

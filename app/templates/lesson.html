@@ -1,11 +1,17 @@
 {% extends "application.html" %}
 
 {% block left %}
+<!-- Lesson navigation -->
 <div id="lesson-nav" class="uk-position-relative">
+    <!-- Previous page -->
+    {% if previous_page %}
     <a href="{{ previous_page }}" class="uk-position-medium uk-position-center-left"><span
             uk-icon="icon: chevron-left"></span>Previous</a>
+    {% endif %}
+    <!-- Page index -->
     <div class="uk-position-medium uk-position-center">
         <div>{{ page_index }} / {{ page_count }}<span uk-icon="icon: chevron-down"></span></div>
+        <!-- Dropdown list -->
         <div id="lesson-nav-dropdown"
             uk-dropdown="mode: click; pos: bottom-justify; boundary: #lesson-nav; boundary-align: true; animation: uk-animation-slide-top-small">
             <ul class="uk-nav uk-dropdown-nav uk-list-striped" uk-accordion>
@@ -30,21 +36,28 @@
             </ul>
         </div>
     </div>
+    <!-- Next page -->
+    {% if next_page %}
     <a href="{{ next_page }}" class="uk-position-medium uk-position-center-right">Next<span
             uk-icon="icon: chevron-right"></span></a>
+    {% endif %}
 </div>
+
+<!-- Lesson -->
 <div id="lesson-wrapper" class="uk-position-relative">
-    <div id="lesson" class="uk-container uk-container-xsmall uk-margin-top">
-        <div style="margin: 5px; text-align: right;">
+    <div id="lesson" class="uk-container uk-container-xsmall uk-margin-small-top">
+        <div style="text-align: right;">
             {% for url, name in chain %}
             {% if loop.index0 + 1 == chain | length %}
             {{name}}
             {% else %}
-            {{name}} > 
+            {{name}} >
             {% endif %}
             {% endfor %}
         </div>
-        {% include lesson_template %}
+        <div class="uk-margin-small-top">
+            {% include lesson_template %}
+        </div>
     </div>
 </div>
 {% endblock %}
