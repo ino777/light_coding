@@ -224,12 +224,6 @@ router.register('/lesson', 'レッスン')
 
 router.register('/lesson/python', 'Python Lesson')
 
-router.register('/lesson/python/list', 'Contents List')
-
-router.register('/lesson/python/introduction', 'イントロ')
-router.register('/lesson/python/introduction/whypython', 'Why Python?')
-router.register('/lesson/python/introduction/pysonic', 'Pysonic なコード')
-router.register('/lesson/python/introduction/helloworld', 'Hello World!')
 
 router.register('/lesson/python/basics', '基礎編')
 router.register('/lesson/python/basics/variable', '変数')
@@ -251,13 +245,9 @@ router.register('/lesson/python/basics/closure', 'クロージャ')
 router.register('/lesson/python/basics/decorator', 'デコレータ')
 router.register('/lesson/python/basics/exception', '例外処理')
 
-router.register('/lesson/python/methods', 'クラスとメソッド')
-router.register('/lesson/python/methods/class', 'クラス')
-router.register('/lesson/python/methods/instance', 'インスタンス')
-router.register('/lesson/python/methods/inheritance', '継承')
-router.register('/lesson/python/methods/property', 'プロパティ')
-router.register('/lesson/python/methods/abstract', '抽象クラス')
-router.register('/lesson/python/methods/classmethod', 'クラスメソッド')
-
-router.register('/lesson/python/library', 'ライブラリ')
-router.register('/lesson/python/library/os', 'os')
+router.register('/lesson/python/class', 'クラスとメソッド')
+router.register('/lesson/python/class/class', 'クラス')
+router.register('/lesson/python/class/methods', 'メソッド')
+router.register('/lesson/python/class/inheritance', '継承')
+router.register('/lesson/python/class/property', 'プロパティ')
+router.register('/lesson/python/class/abstract', '抽象クラス')
