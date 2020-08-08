@@ -120,7 +120,7 @@ button#nav-dropdown{
 }
 
 #code-textarea *{
-    font-size: 17px !important;
+    font-size: 15px !important;
 }
 
 textarea.code {
@@ -160,7 +160,7 @@ button.button:active {
 button#compile-run {
     font-weight: bold;
     color: #ebf7fc;
-    background-image: linear-gradient(#6795fd 0%, #67ceff 100%);
+    background-image: linear-gradient(#6795fd 0%, #97c0fd 100%);
     width: 250px;
 }
 
