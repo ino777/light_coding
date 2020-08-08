@@ -1,4 +1,3 @@
-from config import config
 from wandbox import wandbox
 from app import webserver
 

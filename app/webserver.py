@@ -101,8 +101,8 @@ def lesson(lang, section, page):
 @app.route('/api/compile', methods=['GET'])
 def api_compile():
     code = request.args.get('code', '')
-    print(code, type(code))
-    r = wandbox.compile(code)
+    lang = request.args.get('lang', '')
+    r = wandbox.compile(code, lang)
     return jsonify(r)
 
 

@@ -3,27 +3,28 @@
 var options = {
     code: {
         defaultText: '',
-        language: 'python'
+        language: code_lang
     }
 }
 
 
 function initOpts() {
     options['code']['defaultText'] = $('#editor').val();
-    options['code']['language'] = 'python';
+    options['code']['language'] = code_lang;
 }
 
 
 /* ----------------------------------- API　----------------------------------*/
 // コードをapiに送信
-function compileCode(code, target) {
+function compileCode(code, lang, target) {
     $(target).html('Now connecting...');
 
     $.ajax({
         url: '/api/compile',
         method: 'GET',
         data: {
-            'code': code
+            'code': code,
+            'lang': lang
         }
     })
         .done((result) => {
@@ -98,7 +99,7 @@ $(function () {
     cm.setOption("extraKeys", {
         'Ctrl-Enter': function () {
             var code = $('#editor').val();
-            compileCode(code, '#program-output-text');
+            compileCode(code, options['code']['language'], '#program-output-text');
         }
     });
 
@@ -111,7 +112,7 @@ $(function () {
     // Compile処理
     $('#compile-run').on('click', function () {
         var code = $('#editor').val();
-        compileCode(code, '#program-output-text');
+        compileCode(code, options['code']['language'], '#program-output-text');
     });
 
     console.log(cm.defaultTextHeight());

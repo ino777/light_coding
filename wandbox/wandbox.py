@@ -1,23 +1,32 @@
+import os
+import configparser
 import logging
 import json
 import urllib.parse
 
 import requests
 
-from config import config
-
 
 logger = logging.getLogger(__name__)
+
+config = configparser.ConfigParser()
+config.read(os.path.join(os.path.dirname(__file__), 'config.ini'))
 
 BASE_URL = 'https://wandbox.org/api/'
 
 
-def compile(code, stdinput=''):
+def compile(code, lang, stdinput=''):
     url = urllib.parse.urljoin(BASE_URL, 'compile.json')
+
+    if not config['wandbox_compiler'].get(lang):
+        logger.error('No such compiler for {}'.format(lang))
+        return json.dumps({
+            'status_code': 400,
+        })
 
     data = {
         'code': code,
-        'compiler': config.cfg['wandbox']['compiler'],
+        'compiler': config['wandbox_compiler'][lang],
         'stdin': stdinput
     }
 
