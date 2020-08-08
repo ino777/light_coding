@@ -28,12 +28,16 @@ function compileCode(code, target) {
     })
         .done((result) => {
             console.log(result);
-            message = result.program_message.replace(/</gm, '&lt').replace(/>/gm, '&gt').replace(/\r\n|\r|\n/gm, '<br>');
+            if (result.program_message) {
+                message = result.program_message.replace(/</gm, '&lt').replace(/>/gm, '&gt').replace(/\r\n|\r|\n/gm, '<br>');
+            } else {
+                message = '';
+            }
             message += '<br>'.repeat(3)
             $(target).html(message);
         })
         .fail((result) => {
-            $(target).html('Not response');
+            $(target).html('No response');
         })
 }
 
@@ -110,5 +114,5 @@ $(function () {
         compileCode(code, '#program-output-text');
     });
 
-    $
+    console.log(cm.defaultTextHeight());
 });
