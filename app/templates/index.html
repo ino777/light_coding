@@ -1,10 +1,22 @@
 {% extends "plain.html" %}
 
 {% block plain %}
-<h1>プログラミング言語学習サイト</h1>
-<h3>
-<div class="">
-    <a href="{{ url_for('lesson_list', lang='python')}}">Python Lesson</a>
+<div class="uk-text-center">
+    <h1>Light Coding</h1>
+    <p>個人製作によるプログラミング言語のチュートリアルです。学びながらブラウザ上でコードを実行できます。</p>
 </div>
-</h3>
+<hr>
+<div class="">
+    <ul class="uk-list uk-text-lead uk-text-center">
+        <li>
+            <div class="uk-card uk-card-hover">
+                <a href="{{ url_for('lesson_list', lang='python')}}" class="uk-link-reset">
+                    Python Lesson
+                </a>
+            </div>
+        </li>
+    </ul>
+
+</div>
+
 {% endblock %}

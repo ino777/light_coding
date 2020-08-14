@@ -1,18 +1,24 @@
 {% extends "plain.html" %}
 
 {% block plain %}
-<h1>{{ title }}</h1>
-<ul class="section">
+<div class="uk-text-center">
+    <h1>{{ lang }} Lesson</h1>
+</div>
+<ul class="section uk-list">
     {% for section, pages in links %}
     <li>
-        {{ section[1] }}
-        <ul class="sub-categories">
-            {% for page in pages %}
-            <li>
-                <a href="{{ page[0] }}">{{ page[1] }}</a>
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="uk-section uk-section-xsmall">
+            <h4>{{ section[1] }}</h4>
+            <ul class="sub-categories uk-text-center">
+                {% for page in pages %}
+                <li>
+                    <div class="uk-card uk-card-hover">
+                        <a href="{{ page[0] }}" class="uk-link-reset">{{ page[1] }}</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </li>
     {% endfor %}
 </ul>

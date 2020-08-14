@@ -30,24 +30,26 @@ app.jinja_loader = FileSystemLoader(
 )
 
 
+SITE_TITLE = 'Light Coding'
+
 @app.route('/', methods=['GET'])
 def index():
-    title = 'index'
+    title = 'プログラミングを学ぼう | ' + SITE_TITLE
     return render_template('index.html', title=title)
 
 
 @app.route('/lesson/<lang>/list', methods=['GET'])
 def lesson_list(lang):
-    title = str(lang).capitalize() + ' Lesson'
+    title = str(lang).capitalize() + ' Lesson' + ' - ' + SITE_TITLE
     links = router.children_recursive(url_for('lesson', lang=lang, section='', page=''))
-    return render_template('list.html', title=title, links=links)
+    return render_template('list.html', title=title, lang=str(lang).capitalize(), links=links)
 
 
 # レッスン
 @app.route('/lesson/<lang>/<section>/<page>', methods=['GET'])
 def lesson(lang, section, page):
     # Title
-    title = lang.capitalize() + ' Lesson'
+    title = str(lang).capitalize() + ' Lesson'
 
     # 同一セクション内で登録されたURLの数
     section_children = router.children(router.get_path('lesson', lang, section))
