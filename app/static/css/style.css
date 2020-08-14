@@ -37,6 +37,9 @@ pre {
 /* Header */
 #nav-header {
     background-color: #e6e6e6;
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
 
 button#nav-dropdown{
@@ -48,6 +51,7 @@ button#nav-dropdown{
 /* Main contents */
 .contents {
     display: flex;
+    padding-top: var(--top-navbar-height);
 }
 
 
