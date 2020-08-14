@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 
 try:
     from wandbox import wandbox
-    from app.config.lang_extension_map import extensions
     from app.config.routes import router
 except ImportError as e:
     logger.error(e)
@@ -31,6 +30,10 @@ app.jinja_loader = FileSystemLoader(
 
 
 SITE_TITLE = 'Light Coding'
+EXTS = {
+    'python': 'py',
+    'ruby': 'rb'
+}
 
 @app.route('/', methods=['GET'])
 def index():
@@ -65,7 +68,7 @@ def lesson(lang, section, page):
     chain = router.get_chain(current_path, 2)
 
     # Code
-    ext = extensions.get(lang)
+    ext = EXTS.get(lang)
     if ext is None:
         raise KeyError('No such language in extensions map: ' + lang)
     filename = '{}.{}'.format(page, ext)
