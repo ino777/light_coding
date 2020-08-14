@@ -52,7 +52,7 @@ def lesson_list(lang):
 @app.route('/lesson/<lang>/<section>/<page>', methods=['GET'])
 def lesson(lang, section, page):
     # Title
-    title = str(lang).capitalize() + ' Lesson'
+    title = str(lang).capitalize() + ' Lesson' + ' - ' + SITE_TITLE
 
     # 同一セクション内で登録されたURLの数
     section_children = router.children(router.get_path('lesson', lang, section))
