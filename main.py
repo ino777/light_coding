@@ -1,6 +1,6 @@
 from wandbox import wandbox
-from app import webserver
+from app.webserver import app
 
 
 if __name__ == '__main__':
-    webserver.start_webserver()
+    app.run()
