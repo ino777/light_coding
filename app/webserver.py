@@ -112,5 +112,5 @@ def api_compile():
 
 
 def start_webserver():
-    app.debug = True
+    app.debug = False
     app.run(host='', port=8000)
